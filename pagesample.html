@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- need meta viewport tag to allow for css media queries on mobile -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Top 7 Apologetics</title>
+	<style>
+    body {
+       background: linear-gradient(to bottom right, #0A547D, #408CD0);
+    }
+    h1, h2 {
+      color: #fff;
+    }
+    a.mylink {
+      color: #0A547D;
+      text-decoration: none;
+    }
+
+    a.mylink:hover{
+      color: #0A547D;
+      font-size: 120%;
+      transition: 0.4s ease-in-out; 
+      text-decoration: none;
+    }
+    a.mylink2 {
+      color: #fff;
+      text-decoration: none;
+    }
+    a.mylink2:hover{
+      color: #fff;
+      font-size: 120%;
+      transition: 0.4s ease-in-out; 
+      text-decoration: none;
+    }
+    ul.list-group{
+      border-radius: 25px;
+    }
+    </style>
+	
+  <!-- load jquery to use for external json loading -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- load React - note when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <!-- load babel transpiler to convert React's JSX markup to pure JavaScript
+       Note: we only need babel loaded in the browser if we are not using a build system 
+       where babel would save pure JS files to be loaded by the browser instead -->
+	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  
+</head>
+<body>
+  <div class="container-fluid">
+
+	<div id="theTopApol"></div>
+  </div>
+
+  <script type="text/babel">
+  "use strict";
+
+  // define a react page component (some JSX that will get react to make html elements
+  // in the view (html output) based on the data it receives from the model (json)
+    function TopApol(props) {
+      // return some output for the component using JSX
+      return <div>
+
+      <h1 class="mt-4 text-center"> The Top 7 Apologetics Questions </h1>
+      <h2 class="mt-4 text-center"> These are some of the biggest Apologetics questions which are found on
+      </h2>
+      <h2 class="text-center"> <a class="mylink2" href="https://www.gotquestions.org/content_apologetics_Christianity.html"> Got Questions: </a> </h2>
+
+<ul class="list-group list-group-flush mt-4">
+            {
+              // use map() to loop thru array passed in props.list, creating new element for each array value
+              props.list.map( 
+                // copy current array value into item and pass to arrow function
+                (item,index) => (
+                  <li key={index} class="list-group-item"><a href={item.link} class="mylink">
+                      {item.title} </a>
+                      <span class="badge bg-primary rounded-pill">{index}</span>
+                  </li>
+                )
+              )
+            }
+          </ul>
+        </div>;
+    }
+
+  // use jQuery to load JSON
+  $.getJSON("anything", function(jsonFromJquery) {
+    // after JSON loaded, call react render() to output component into existing element
+    // render() takes 2 arguments: (1) JSX component, (2) the html element to render into
+    ReactDOM.render(
+      <TopApol list={jsonFromJquery} />,
+      document.getElementById("theTopApol")
+    );
+  }
+  );
+  </script>
+</body>
+
+</html>
